@@ -54,10 +54,17 @@ if st.button("🚀 開始生成 Spotify 標準封面", use_container_width=True)
             )
             
             if output:
+                # 取得圖片的網址或數據
+                # Replicate 的 FLUX 模型有時回傳清單，有時回傳單一物件
+                image_url = output[0] if isinstance(output, list) else output
+
                 # 顯示圖片
-                st.image(output[0], caption=f"預覽：{album_title}", use_column_width=True)
+                st.image(image_url, caption=f"預覽：{album_title}", use_container_width=True)
                 
                 st.success("✅ 生成成功！這是一張符合 1:1 比例的底圖。")
+                
+                # 提供下載按鈕（直接連結到生成的圖片）
+                st.markdown(f'[👉 點我開啟並儲存高解析度原圖]({image_url})')
                 
                 # 下載按鈕
                 st.download_button(
