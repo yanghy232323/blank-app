@@ -40,19 +40,19 @@ if st.button("🚀 開始生成 Spotify 標準封面", use_container_width=True)
             # 建立 Prompt
             prompt_text = f"Professional album cover art, {genre} style. {description}. High quality, artistic."
             
-            # 呼叫 Replicate API (使用 FLUX IP-Adapter)
+            # 呼叫 Replicate API (更換為更穩定的 FLUX 模型路徑)
             output = replicate.run(
-                "lucataco/flux-dev-ip-adapter:81896898d933757303f27a6962f3a8b417c805eb319983ed81d4590458117765",
+                "black-forest-labs/flux-dev",
                 input={
                     "prompt": prompt_text,
-                    "image": style_files[0],  # 抓第一張風格圖當參考
-                    "num_outputs": 1,
+                    "image_prompt": style_files[0], # 這裡會參考你的風格圖
                     "aspect_ratio": "1:1",
                     "output_format": "jpg",
-                    "guidance_scale": 3.5
+                    "guidance_scale": 3.5,
+                    "num_inference_steps": 28
                 }
             )
-
+            
             if output:
                 # 顯示圖片
                 st.image(output[0], caption=f"預覽：{album_title}", use_column_width=True)
